@@ -24,3 +24,121 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+/* Smooth font rendering and base layout helpers */
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.container {
+  max-width: 72rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Meme Mode styles */
+.meme-mode {
+  --bg1: #ff00a6;
+  --bg2: #00ffd1;
+  --bg3: #ffea00;
+  --bg4: #7c00ff;
+  background: linear-gradient(135deg, var(--bg1), var(--bg2));
+}
+.meme-title {
+  font-family: var(--font-press-start), var(--font-geist-sans), system-ui;
+  text-shadow: 4px 4px 0 #000;
+}
+.meme-card {
+  border: 3px solid #000;
+  box-shadow: 6px 6px 0 #000;
+}
+.meme-button {
+  border: 3px solid #000;
+  box-shadow: 4px 4px 0 #000;
+  transition: transform 120ms ease;
+}
+.meme-button:active {
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0 #000;
+}
+
+/* Boring Mode overrides */
+.boring-mode .meme-title,
+.boring-mode .meme-card,
+.boring-mode .meme-button {
+  text-shadow: none;
+  border-width: 1px;
+  box-shadow: none;
+}
+
+/* Confetti */
+.meme-mode .confetti {
+  position: fixed;
+  top: -10px;
+  left: 0;
+  width: 8px;
+  height: 12px;
+  background: var(--confetti-color, #fff);
+  transform: rotate(var(--confetti-rot, 0deg));
+  pointer-events: none;
+  animation: confetti-fall linear forwards;
+}
+.meme-mode .confetti.emoji {
+  width: auto;
+  height: auto;
+  background: transparent;
+  font-size: 18px;
+}
+
+@keyframes confetti-fall {
+  0% { transform: translateY(-10px) translateX(0) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(110vh) translateX(var(--confetti-drift, 0px)) rotate(720deg); opacity: 0; }
+}
+
+/* Disco overlay */
+.meme-mode .disco-overlay {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 50;
+  overflow: hidden;
+}
+.meme-mode .disco-beam {
+  position: absolute;
+  top: -20vh;
+  width: 20px;
+  height: 140vh;
+  opacity: 0.6;
+  filter: blur(1px);
+  transform-origin: top center;
+  animation: beam-swing 2.4s ease-in-out infinite alternate;
+}
+@keyframes beam-swing {
+  0% { transform: rotate(-18deg); }
+  100% { transform: rotate(18deg); }
+}
+
+.meme-mode .disco-strobe {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 40;
+  background: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.25), rgba(255,255,255,0) 60%);
+  animation: strobe 0.5s linear infinite;
+}
+@keyframes strobe {
+  0% { opacity: 0.1; }
+  50% { opacity: 0.4; }
+  100% { opacity: 0.1; }
+}
+
+/* Disco pulse (hue rotate / glow) */
+.meme-mode.disco-pulse,
+.meme-mode.disco-pulse * {
+  animation: hue 6s linear infinite;
+}
+@keyframes hue {
+  0% { filter: hue-rotate(0deg); }
+  100% { filter: hue-rotate(360deg); }
+}
